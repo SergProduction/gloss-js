@@ -1,18 +1,10 @@
-import { t } from './lib'
+import * as c from './render-types'
 
-
-export const c = {
-  color: t('color', 'picture'),
-  border: t('color', 'picture'),
-  pictures: t('pictures'),
-  rect: t('x', 'y', 'width', 'height'),
-  arc: t('x', 'y', 'radius', 'startAngle', 'endAngle', 'anticlockwise'),
-}
 
 
 export const render = (ctx, ast) => {
   // console.log(ast)
-
+  
   const swtchType = (node) => {
     // console.log({ node })
     switch (node.type) {
@@ -25,18 +17,26 @@ export const render = (ctx, ast) => {
       case c.rect.type: {
         return () => { ctx.rect(...node.valuesParams) }
       }
+      case c.line.type: {
+        return () => {
+          // ctx.beginPath()
+          ctx.moveTo(node.zipParams.startX, node.zipParams.startY)
+          ctx.lineTo(node.zipParams.endX, node.zipParams.endY)
+          ctx.closePath()
+        }
+      }
       case c.border.type: {
         return () => {
           swtchType(node.zipParams.picture)()
-          ctx.strokeStyle = node.zipParams.color;
-          ctx.stroke();
+          ctx.strokeStyle = node.zipParams.color
+          ctx.stroke()
         }
       }
       case c.color.type: {
         return () => {
           swtchType(node.zipParams.picture)()
-          ctx.fillStyle = node.zipParams.color;
-          ctx.fill();
+          ctx.fillStyle = node.zipParams.color
+          ctx.fill()
         }
       }
       case c.pictures.type: {

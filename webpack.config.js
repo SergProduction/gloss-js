@@ -20,7 +20,7 @@ const prod = {}
 
 const common = {
   context: __dirname,
-  entry: './src/example.js',
+  entry: './src/index.js',
   resolve: {
     extensions: ['.js'],
     modules: ['node_modules', 'src'],
