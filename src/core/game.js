@@ -25,7 +25,9 @@ export function play(
     ctx.beginPath()
 
     state = transformStateFPS(fpsStep, state)
+
     const astRender = render(state)
+
     renderCore(ctx, astRender)
   })
 

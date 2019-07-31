@@ -17,5 +17,5 @@ export default play(
   render,
   transformStateInEvent,
   transformStateFPS,
-  ['mousemove', 'keydown']
+  ['keydown']
 )
