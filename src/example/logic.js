@@ -1,13 +1,45 @@
 import { caseOf } from './lib'
-import { DIRECTION } from './constants'
+import { DIRECTION, scaleSizeMax } from './constants'
+
+
+
 
 
 // Snake -> Dir -> Snake
 const snakeAddHead = ([head, ...tail], direction) => caseOf(direction, {
-  [DIRECTION.left]: [{ x: head.x - 1, y: head.y }, head, ...tail ],
-  [DIRECTION.up]: [{ x: head.x, y: head.y - 1 }, head, ...tail ],
-  [DIRECTION.right]: [{ x: head.x + 1, y: head.y }, head, ...tail ],
-  [DIRECTION.down]: [{ x: head.x, y: head.y + 1 }, head, ...tail ],
+  [DIRECTION.left]: [
+    { x: head.x <= 0
+      ? scaleSizeMax
+      : head.x - 1
+    , y: head.y },
+    head,
+    ...tail
+  ],
+  [DIRECTION.up]: [
+    { x: head.x
+    , y: head.y <= 0
+      ? scaleSizeMax
+      : head.y - 1 },
+    head,
+    ...tail
+  ],
+  [DIRECTION.right]: [
+    { x: head.x >= scaleSizeMax
+      ? 0
+      : head.x + 1
+    , y: head.y },
+    head,
+    ...tail
+  ],
+  [DIRECTION.down]: [
+    { x: head.x
+    , y: head.y >= scaleSizeMax
+      ? 0
+      : head.y + 1
+    },
+    head,
+    ...tail
+  ],
   _: [head, ...tail]
 })
 
@@ -16,7 +48,7 @@ const snakeAddHead = ([head, ...tail], direction) => caseOf(direction, {
 const snakeRemoveTail = snake => snake.slice(0, snake.length - 1)
 
 
-// Int -> Direction
+// Int -> State -> Direction
 const getDirectionFromKeyCode = (keyCode, state) => caseOf(keyCode, {
   37: DIRECTION.left,
   38: DIRECTION.up,
@@ -34,7 +66,7 @@ const moveSnake = (snake, direction) => snakeRemoveTail(
 export const transformStateInEvent = (eventType, event, state) => caseOf(eventType, {
   keydown: {
     ...state,
-    direction: getDirectionFromKeyCode(event.keyCode)
+    direction: getDirectionFromKeyCode(event.keyCode, state)
   },
   _: state
 })

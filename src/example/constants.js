@@ -1,26 +1,34 @@
+import { getRandomInt } from './lib'
 
-export const FPS = 5
+export const FPS = 30
 
-export const countCellGrid = 40
+
+export const canvasParam = {
+  width: 500,
+  height: 500,
+}
+
+
+ export const countCellGrid = 40
+
+
+export const scaleSizeOne = canvasParam.width / countCellGrid
+export const scaleSizeMax = canvasParam.width / scaleSizeOne
 
 
 export const DIRECTION = {
-  left: Symbol(),
-  up: Symbol(),
-  right: Symbol(),
-  down: Symbol(),
+  left: 0,
+  up: 1,
+  right: 2,
+  down: 3,
 }
 
 
 export const initialState = {
-  pos: { x: 0, y: 0 },
-  word: Array.from(
-    { length: countCellGrid },
-    () => Array.from(
-      { length: countCellGrid },
-      () => 0
-    )
-  ),
+  eat: {
+    x: getRandomInt(0, scaleSizeMax),
+    y: getRandomInt(0, scaleSizeMax)
+  },
   direction: DIRECTION.right,
   snake: [
     { x: 8, y: 2 },
@@ -31,10 +39,5 @@ export const initialState = {
     { x: 3, y: 2 },
     { x: 2, y: 2 },
   ]
-}
-
-export const canvasParam = {
-  width: 500,
-  height: 500,
 }
 
