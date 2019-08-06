@@ -1,14 +1,14 @@
 import { render as renderCore } from "./render"
-import { fpsControll } from "./fps-controll"
+import { fpsControl } from "./fps-control"
 
 export function play(
   settings,
-  fps,
-  initialState,
+  fps = 0,
+  initialState = {},
   render,
-  transformStateInEvent,
-  transformStateFPS,
-  listenersEvenetsList
+  transformStateInEvent = (eventName, event, state) => state,
+  transformStateFPS = (fpsState, state) => state,
+  listenersEvenetsList = []
 ) {
   const { canvas } = settings
 
@@ -20,15 +20,17 @@ export function play(
 
   let state = initialState
 
-  const controll = fpsControll(fps, settings.showFPS, fpsStep => {
+  // first render
+  renderCore(ctx, render(state))
+
+
+  const control = fpsControl(fps, settings.showFPS, fpsStep => {
     ctx.clearRect(0, 0, settings.width, settings.height)
     ctx.beginPath()
 
     state = transformStateFPS(fpsStep, state)
 
-    const astRender = render(state)
-
-    renderCore(ctx, astRender)
+    renderCore(ctx, render(state))
   })
 
   listenersEvenetsList.forEach(eventType => {
@@ -41,9 +43,9 @@ export function play(
     })
   })
 
-  controll.start()
+  control.start()
 
-  window.controllGame = controll
+  window.controlGame = control
 
-  return controll
+  return control
 }

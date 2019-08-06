@@ -1,6 +1,6 @@
 import { getRandomInt } from './lib'
 
-export const FPS = 30
+export const FPS = 120
 
 
 export const canvasParam = {
@@ -26,8 +26,8 @@ export const DIRECTION = {
 
 export const initialState = {
   eat: {
-    x: getRandomInt(0, scaleSizeMax),
-    y: getRandomInt(0, scaleSizeMax)
+    x: getRandomInt(0, scaleSizeMax) * scaleSizeOne,
+    y: getRandomInt(0, scaleSizeMax) * scaleSizeOne
   },
   direction: DIRECTION.right,
   snake: [

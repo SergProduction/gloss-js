@@ -4,7 +4,7 @@ div.style.bottom = '0'
 div.style.right = '0'
 document.body.appendChild(div)
 
-export const fpsControll = (fps, isShowFPS, cb) => {
+export const fpsControl = (fps, isShowFPS, cb) => {
   var stop = false
   var frameCount = 0
   var fps, fpsInterval, startTime, now, then, elapsed, fpsStep

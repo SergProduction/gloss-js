@@ -3,14 +3,16 @@ import * as c from './render-types'
 
 
 export const render = (ctx, ast) => {
-  // console.log(ast)
-  
   const swtchType = (node) => {
-    // console.log({ node })
     switch (node.type) {
       case c.arc.type: {
         return () => {
           ctx.arc(...node.valuesParams)
+        }
+      }
+      case c.circle.type: {
+        return () => {
+          ctx.arc(...node.valuesParams, 0, 2 * Math.PI)
         }
       }
       case c.rect.type: {
@@ -18,33 +20,33 @@ export const render = (ctx, ast) => {
       }
       case c.line.type: {
         return () => {
-          c.line.arrayPath.forEach((path, i) => {
+          node.zipParams.path.forEach((p, i) => {
             if (i === 0) {
-              ctx.moveTo(path.x, path.y)
+              ctx.moveTo(p.x, p.y)
             }
             else {
-              ctx.lineTo(path.x, path.y)
+              ctx.lineTo(p.x, p.y)
             }
           })
         }
       }
       case c.border.type: {
         return () => {
-          swtchType(node.zipParams.picture)()
+          swtchType(node.zipParams.shape)()
           ctx.strokeStyle = node.zipParams.color
           ctx.stroke()
         }
       }
       case c.color.type: {
         return () => {
-          swtchType(node.zipParams.picture)()
+          swtchType(node.zipParams.shape)()
           ctx.fillStyle = node.zipParams.color
           ctx.fill()
         }
       }
       case c.pictures.type: {
         return () => {
-          node.zipParams.pictures.map(pic => (
+          node.zipParams.shapes.map(pic => (
             swtchType(pic)()
           ))
         }
@@ -52,7 +54,7 @@ export const render = (ctx, ast) => {
       case c.shape.type: {
         return () => {
           ctx.beginPath()
-          node.zipParams.pictures.map(pic => (
+          node.zipParams.picture.map(pic => (
             swtchType(pic)()
           ))
           ctx.closePath()

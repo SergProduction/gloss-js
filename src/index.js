@@ -1,1 +1,2 @@
-import game from './example/index'
+// import game from './examples/snake'
+import game from './examples/solid-shape'
