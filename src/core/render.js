@@ -10,7 +10,6 @@ export const render = (ctx, ast) => {
     switch (node.type) {
       case c.arc.type: {
         return () => {
-          ctx.beginPath()
           ctx.arc(...node.valuesParams)
         }
       }
@@ -19,10 +18,14 @@ export const render = (ctx, ast) => {
       }
       case c.line.type: {
         return () => {
-          // ctx.beginPath()
-          ctx.moveTo(node.zipParams.startX, node.zipParams.startY)
-          ctx.lineTo(node.zipParams.endX, node.zipParams.endY)
-          ctx.closePath()
+          c.line.arrayPath.forEach((path, i) => {
+            if (i === 0) {
+              ctx.moveTo(path.x, path.y)
+            }
+            else {
+              ctx.lineTo(path.x, path.y)
+            }
+          })
         }
       }
       case c.border.type: {
@@ -44,6 +47,15 @@ export const render = (ctx, ast) => {
           node.zipParams.pictures.map(pic => (
             swtchType(pic)()
           ))
+        }
+      }
+      case c.shape.type: {
+        return () => {
+          ctx.beginPath()
+          node.zipParams.pictures.map(pic => (
+            swtchType(pic)()
+          ))
+          ctx.closePath()
         }
       }
     }
