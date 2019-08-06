@@ -2,7 +2,7 @@ import { render as renderCore } from "./render"
 import { fpsControll } from "./fps-controll"
 
 export function play(
-  canvasSettings,
+  settings,
   fps,
   initialState,
   render,
@@ -10,22 +10,24 @@ export function play(
   transformStateFPS,
   listenersEvenetsList
 ) {
-  const { canvas } = canvasSettings
+  const { canvas } = settings
 
-  canvas.width = canvasSettings.width
-  canvas.height = canvasSettings.height
+  canvas.width = settings.width
+  canvas.height = settings.height
   canvas.style.border = "1px solid #ccc"
 
   const ctx = canvas.getContext("2d")
 
   let state = initialState
 
-  const controll = fpsControll(fps, fpsStep => {
-    ctx.clearRect(0, 0, canvasSettings.width, canvasSettings.height)
+  const controll = fpsControll(fps, settings.showFPS, fpsStep => {
+    ctx.clearRect(0, 0, settings.width, settings.height)
     ctx.beginPath()
 
     state = transformStateFPS(fpsStep, state)
+
     const astRender = render(state)
+
     renderCore(ctx, astRender)
   })
 

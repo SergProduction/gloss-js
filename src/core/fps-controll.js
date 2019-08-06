@@ -1,4 +1,10 @@
-export const fpsControll = (fps, cb) => {
+const div = document.createElement('div')
+div.style.position = 'fixed'
+div.style.bottom = '0'
+div.style.right = '0'
+document.body.appendChild(div)
+
+export const fpsControll = (fps, isShowFPS, cb) => {
   var stop = false
   var frameCount = 0
   var fps, fpsInterval, startTime, now, then, elapsed, fpsStep
@@ -32,13 +38,19 @@ export const fpsControll = (fps, cb) => {
       // Also, adjust for fpsInterval not being multiple of 16.67
       then = now - (elapsed % fpsInterval)
 
-      var sinceStart = now - startTime
-      var currentFps = Math.round(1000 / (sinceStart / ++frameCount) * 100) / 100
+      // var sinceStart = now - startTime
+      // var currentFps = Math.round(1000 / (sinceStart / ++frameCount) * 100) / 100
       
       fpsStep += 1
 
       if (fpsStep >= fps) {
         fpsStep = 0
+      }
+
+      if (isShowFPS === true) {
+        var sinceStart = now - startTime
+        var currentFps = Math.round(1000 / (sinceStart / ++frameCount) * 100) / 100
+        div.textContent = currentFps
       }
 
       cb(fpsStep)

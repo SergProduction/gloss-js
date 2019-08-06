@@ -11,11 +11,12 @@ export default play(
     canvas: document.getElementById("canvas"),
     width: canvasParam.width,
     height: canvasParam.height,
+    showFPS: true,
   },
   FPS,
   initialState,
   render,
   transformStateInEvent,
   transformStateFPS,
-  ['mousemove', 'keydown']
+  ['keydown']
 )
