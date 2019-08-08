@@ -16,11 +16,13 @@ type Shape = Symbol
 ```
 
 ```javascript
-// line :: Path -> Shape
-// line = t('path')
-declare function line(Path): Shape
+// line :: Path -> Maybe Bool -> Shape
+// line = t('path', 'notMove')
+declare function line(Path, ?bool): Shape
 ```
-рисует непрерывную линию по координатным точкам
+Рисует непрерывную линию по координатным точкам.  
+По умолчанию, для первой точки используется команда переноса пера `moveTo(path[0].x, path[0].y)`, для всех последующих рисуется непрерывная линия `lineTo(path[i].x, path[i]y)`.
+Если вы хотите соединить начало линии с другой фигуров, например полукруг, то вам не надо использовать в начале moveTo, для этого необходимо передать вторым аргументом `true`
 
 
 ```javascript
@@ -28,7 +30,7 @@ declare function line(Path): Shape
 // rect = t('x', 'y', 'width', 'height')
 declare function rect(number, number, number, number): Shape
 ```
-рисует квадрат (аналогичный метод ctx.rect)
+Рисует квадрат (аналогичный метод ctx.rect)
 
 
 ```javascript
@@ -36,7 +38,7 @@ declare function rect(number, number, number, number): Shape
 // circle = t('x', 'y', 'radius')
 declare function circle(Path): Shape
 ```
-рисует круг в точке x, y с заданным радиусом
+Рисует круг в точке x, y с заданным радиусом
 
 
 ```javascript
@@ -44,23 +46,23 @@ declare function circle(Path): Shape
 // arc = t('x', 'y', 'radius', 'startAngle', 'endAngle', 'anticlockwise')
 declare function arc(number, number, number, number, number, number): Shape
 ```
-рисует дугу (аналогичный метод ctx.arc)
+Рисует дугу (аналогичный метод ctx.arc)
 
 
 ```javascript
-// pictures :: [Shape] -> Picture
+// pictures :: [Shape] -> Shape
 // pictures = t('shapes')
-declare function pictures(Array<Shape>): Picture
+declare function pictures(Array<Shape>): Shape
 ```
-все методы для рисования возращают фигуру (Shape), функция picture принимает массив фигур и возращает как бы слой в который собраны все фигуры
+Все методы для рисования возращают фигуру (Shape), функция picture принимает массив фигур и возращает как бы слой в который собраны все фигуры
 
 
 ```javascript
-// shape :: Picture -> Shape
+// shape :: [Shape] -> Shape
 // shape = t('picture')
-declare function shape(Array<Picture>): Shape
+declare function shape(Array<Shape>): Shape
 ```
-принмиает слой фигур (Picture) и объеденяет их в одну фигуру, чтоб например можно было потом покрасить все в один цвет
+Принмиает слой фигур (Picture) и объеденяет их в одну фигуру, чтоб например можно было потом покрасить все в один цвет
 
 
 
@@ -69,14 +71,14 @@ declare function shape(Array<Picture>): Shape
 // color = t('color', 'shape')
 declare function color(string, Shape): Shape
 ```
-цвет заливки
+Цвет заливки
 
 ```javascript
 // border :: String -> Shape -> Shape
 // border = t('color', 'shape')
 declare function border(string, Shape): Shape
 ```
-цвет границ
+Цвет границ
 
 ### game play
 ```javascript
@@ -94,7 +96,7 @@ type EventName  = String
 play :: CanvasSetting
     -> FPS
     -> State
-    -> (State -> Picture)
+    -> (State -> Shape)
     -> (EventName -> Event -> State -> State)
     -> (FPS -> State -> State)
     -> [EventName]

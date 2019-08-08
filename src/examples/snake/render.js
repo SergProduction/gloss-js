@@ -7,24 +7,24 @@ import {
   shape
 } from "../../core/render-types"
 
-import { canvasParam, scaleSizeOne } from "./constants"
+import { CANVAS_PARAM, SCALE_SIZE_ONE } from "./constants"
 
 
 
 const renderXineGrid = pictures(
-  Array.from({ length: canvasParam.width },
+  Array.from({ length: CANVAS_PARAM.width },
     (_, y) => line([
-      { x: 0, y: y * scaleSizeOne },
-      { x: canvasParam.width, y: y * scaleSizeOne }
+      { x: 0, y: y * SCALE_SIZE_ONE },
+      { x: CANVAS_PARAM.width, y: y * SCALE_SIZE_ONE }
     ])
   )
 )
 
 const renderYineGrid = pictures(
-  Array.from({ length: canvasParam.height },
+  Array.from({ length: CANVAS_PARAM.height },
     (_, x) => line([
-      { x: x * scaleSizeOne, y: 0},
-      { x: x * scaleSizeOne, y: canvasParam.height}
+      { x: x * SCALE_SIZE_ONE, y: 0},
+      { x: x * SCALE_SIZE_ONE, y: CANVAS_PARAM.height}
     ])
   )
 )
@@ -43,31 +43,31 @@ const renderSnake = (snake) => color(
   shape(
     snake.map(({ x, y }) => (
       rect(
-        x * scaleSizeOne,
-        y * scaleSizeOne,
-        scaleSizeOne,
-        scaleSizeOne,
+        x * SCALE_SIZE_ONE,
+        y * SCALE_SIZE_ONE,
+        SCALE_SIZE_ONE,
+        SCALE_SIZE_ONE,
       )
     ))
   )
 )
 
-const renderEat = (eat) => color(
+const renderEat = (eat) =>  shape([ color(
   '#f00',
   // shape([
-    rect(eat.x, eat.y, scaleSizeOne, scaleSizeOne)
+    rect(eat.x, eat.y, SCALE_SIZE_ONE, SCALE_SIZE_ONE)
   // ])
-)
+) ])
 
-const renderEat2 = (eat) => color(
+const renderEat2 = (eat) => shape([ color(
   '#0f0',
   // shape([
     rect(
-      eat.x + (2 * scaleSizeOne),
-      eat.y + (2 * scaleSizeOne),
-      scaleSizeOne, scaleSizeOne)
+      eat.x + (2 * SCALE_SIZE_ONE),
+      eat.y + (2 * SCALE_SIZE_ONE),
+      SCALE_SIZE_ONE, SCALE_SIZE_ONE)
   // ])
-)
+) ])
 
 export const render = state => pictures([
   renderGrid,

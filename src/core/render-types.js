@@ -18,7 +18,7 @@ export const border = t('color', 'shape')
 
 
 // line :: Path -> Shape
-export const line = t('path')
+export const line = t('path', 'notMove')
 // rect :: Int -> Int -> Int -> Int -> Shape
 export const rect = t('x', 'y', 'width', 'height')
 // arc :: Int -> Int -> Int -> Int -> Int -> Bool -> Shape

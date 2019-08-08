@@ -1,5 +1,5 @@
 import { caseOf } from './lib'
-import { DIRECTION, scaleSizeMax } from './constants'
+import { DIRECTION, SCALE_SIZE_MAX } from './constants'
 
 
 
@@ -9,7 +9,7 @@ import { DIRECTION, scaleSizeMax } from './constants'
 const snakeAddHead = ([head, ...tail], direction) => caseOf(direction, {
   [DIRECTION.left]: [
     { x: head.x <= 0
-      ? scaleSizeMax
+      ? SCALE_SIZE_MAX
       : head.x - 1
     , y: head.y },
     head,
@@ -18,13 +18,13 @@ const snakeAddHead = ([head, ...tail], direction) => caseOf(direction, {
   [DIRECTION.up]: [
     { x: head.x
     , y: head.y <= 0
-      ? scaleSizeMax
+      ? SCALE_SIZE_MAX
       : head.y - 1 },
     head,
     ...tail
   ],
   [DIRECTION.right]: [
-    { x: head.x >= scaleSizeMax
+    { x: head.x >= SCALE_SIZE_MAX
       ? 0
       : head.x + 1
     , y: head.y },
@@ -33,7 +33,7 @@ const snakeAddHead = ([head, ...tail], direction) => caseOf(direction, {
   ],
   [DIRECTION.down]: [
     { x: head.x
-    , y: head.y >= scaleSizeMax
+    , y: head.y >= SCALE_SIZE_MAX
       ? 0
       : head.y + 1
     },

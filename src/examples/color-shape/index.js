@@ -9,9 +9,17 @@ import {
 } from '../../core/render-types'
 
 
-const RADIUS = 30
 
-const degToRad = deg => deg / (180 / Math.PI)
+
+const SQUART_SIZE = 40
+
+
+const renderSquartRed = (eat) => color(
+  '#f00',
+  // shape([
+    rect(eat.x, eat.y, SQUART_SIZE, SQUART_SIZE)
+  // ])
+)
 
 const render = () => border(
   '#f00',

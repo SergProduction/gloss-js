@@ -3,17 +3,17 @@ import { getRandomInt } from './lib'
 export const FPS = 120
 
 
-export const canvasParam = {
+export const CANVAS_PARAM = {
   width: 500,
   height: 500,
 }
 
 
- export const countCellGrid = 40
+ export const COUNT_CELL_GRID = 40
 
 
-export const scaleSizeOne = canvasParam.width / countCellGrid
-export const scaleSizeMax = canvasParam.width / scaleSizeOne
+export const SCALE_SIZE_ONE = CANVAS_PARAM.width / COUNT_CELL_GRID
+export const SCALE_SIZE_MAX = CANVAS_PARAM.width / SCALE_SIZE_ONE
 
 
 export const DIRECTION = {
@@ -26,8 +26,8 @@ export const DIRECTION = {
 
 export const initialState = {
   eat: {
-    x: getRandomInt(0, scaleSizeMax) * scaleSizeOne,
-    y: getRandomInt(0, scaleSizeMax) * scaleSizeOne
+    x: getRandomInt(0, SCALE_SIZE_MAX) * SCALE_SIZE_ONE,
+    y: getRandomInt(0, SCALE_SIZE_MAX) * SCALE_SIZE_ONE
   },
   direction: DIRECTION.right,
   snake: [

@@ -21,7 +21,7 @@ export const render = (ctx, ast) => {
       case c.line.type: {
         return () => {
           node.zipParams.path.forEach((p, i) => {
-            if (i === 0) {
+            if (i === 0 && node.zipParams.notMove !== true) {
               ctx.moveTo(p.x, p.y)
             }
             else {
